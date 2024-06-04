@@ -16,11 +16,11 @@ public class Package extends Shipment {
     @JoinColumn(name = "sack_id")
     private Sack sack;
 
-
-
-    public Package(String barcode, DeliveryPoint deliveryPoint, ShipmentState state, Integer desi) {
+    public Package(String barcode, DeliveryPoint deliveryPoint,
+                   ShipmentState state, Integer desi, Sack sack) {
         super(barcode, deliveryPoint, state);
         this.desi = desi;
+        this.sack = sack;
     }
 
     public Package() {

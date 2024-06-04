@@ -4,8 +4,7 @@ import com.example.fleetmanagement.model.enums.DeliveryPoint;
 import com.example.fleetmanagement.model.enums.ShipmentState;
 import jakarta.persistence.*;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@MappedSuperclass
 public abstract class Shipment {
 
     @Id
