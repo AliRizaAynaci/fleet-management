@@ -36,9 +36,9 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public DistributionResponseDto distribute(DistributionRequestDTO request) {
+    public DistributionResponseDto distribute(DistributionRequestDTO request, VehicleDto vehicle) {
         DistributionResponseDto response = new DistributionResponseDto();
-        response.setVehicle(request.getVehicle());
+        response.setVehicle(vehicle);
 
         List<RouteDto> responseRoutes = new ArrayList<>();
 
@@ -52,8 +52,17 @@ public class VehicleServiceImpl implements VehicleService {
                 if (barcode.startsWith("P")) {
                     Package packageItem = packageRepository.findByBarcode(barcode)
                             .orElseThrow(() -> new IllegalArgumentException("Package not found with barcode: " + barcode));
-                    newState = processPackage(packageItem, deliveryPoint);
-                    packageRepository.save(packageItem);
+
+                    if (packageItem.getState() == ShipmentState.CREATED) {
+                        newState = processPackage(packageItem, deliveryPoint);
+                        packageRepository.save(packageItem);
+                    } else if (packageItem.getState() == ShipmentState.LOADED) {
+                        newState = processSack(packageItem.getSack(), deliveryPoint);
+                        packageRepository.save(packageItem);
+                    }
+                    else {
+                        newState = packageItem.getState();
+                    }
                 } else {
                     Sack sack = sackRepository.findByBarcode(barcode)
                             .orElseThrow(() -> new IllegalArgumentException("Sack not found with barcode: " + barcode));
@@ -69,18 +78,21 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     private ShipmentState processPackage(Package packageItem, DeliveryPoint deliveryPoint) {
-        if (packageItem.getState() == ShipmentState.LOADED) {
+        if (packageItem.getState() == ShipmentState.CREATED) {
             if (deliveryPoint == packageItem.getDeliveryPoint()) {
-                switch (deliveryPoint) {
-                    case DISTRIBUTION_CENTER:
-                        return distributionCenterService.unloadPackage(packageItem);
-                    case BRANCH:
-                        return branchService.unloadPackage(packageItem);
-                    default:
-                        throw new IllegalArgumentException("Package cannot be unloaded at this delivery point.");
+
+                if (deliveryPoint == DeliveryPoint.DISTRIBUTION_CENTER) {
+                    return distributionCenterService.unloadPackage(packageItem);
+                } else if (deliveryPoint == DeliveryPoint.BRANCH) {
+                    return branchService.unloadPackage(packageItem);
                 }
+                packageItem.setState(ShipmentState.LOADED);
+                packageRepository.save(packageItem);
+                return packageItem.getState();
             } else {
-                throw new IllegalArgumentException("Package cannot be loaded at this delivery point.");
+                packageItem.setState(ShipmentState.LOADED);
+                packageRepository.save(packageItem);
+                return packageItem.getState();
             }
         } else {
             throw new IllegalArgumentException("Invalid package state.");
@@ -90,16 +102,19 @@ public class VehicleServiceImpl implements VehicleService {
     private ShipmentState processSack(Sack sack, DeliveryPoint deliveryPoint) {
         if (sack.getState() == ShipmentState.LOADED) {
             if (deliveryPoint == sack.getDeliveryPoint()) {
-                switch (deliveryPoint) {
-                    case DISTRIBUTION_CENTER:
-                        return distributionCenterService.unloadSack(sack);
-                    case TRANSFER_CENTER:
-                        return transferCenterService.unloadSack(sack);
-                    default:
-                        throw new IllegalArgumentException("Sack cannot be unloaded at this delivery point.");
+
+                if (deliveryPoint == DeliveryPoint.DISTRIBUTION_CENTER) {
+                    return distributionCenterService.unloadSack(sack);
+                } else if (deliveryPoint == DeliveryPoint.TRANSFER_CENTER) {
+                    return transferCenterService.unloadSack(sack);
                 }
+                sack.setState(ShipmentState.LOADED);
+                sackRepository.save(sack);
+                return sack.getState();
             } else {
-                throw new IllegalArgumentException("Sack cannot be unloaded at this delivery point.");
+                sack.setState(ShipmentState.LOADED);
+                sackRepository.save(sack);
+                return sack.getState();
             }
         } else {
             throw new IllegalArgumentException("Invalid sack state.");

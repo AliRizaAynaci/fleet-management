@@ -11,6 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class DistributionRequestDTO {
 
-    private VehicleDto vehicle;
     private List<RouteDto> route;
 }
