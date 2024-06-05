@@ -1,4 +1,4 @@
-package com.example.fleetmanagement.model;
+package com.example.fleetmanagement.model.entity;
 
 import com.example.fleetmanagement.model.abstracts.Shipment;
 import com.example.fleetmanagement.model.enums.DeliveryPoint;

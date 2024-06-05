@@ -1,7 +1,7 @@
 package com.example.fleetmanagement.service.impl;
 
-import com.example.fleetmanagement.model.Package;
-import com.example.fleetmanagement.model.Sack;
+import com.example.fleetmanagement.model.entity.Package;
+import com.example.fleetmanagement.model.entity.Sack;
 import com.example.fleetmanagement.model.enums.DeliveryPoint;
 import com.example.fleetmanagement.model.enums.ShipmentState;
 import com.example.fleetmanagement.repository.PackageRepository;

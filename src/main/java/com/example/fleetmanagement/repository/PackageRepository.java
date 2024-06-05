@@ -1,6 +1,6 @@
 package com.example.fleetmanagement.repository;
 
-import com.example.fleetmanagement.model.Package;
+import com.example.fleetmanagement.model.entity.Package;
 import com.example.fleetmanagement.model.enums.DeliveryPoint;
 import org.springframework.data.jpa.repository.JpaRepository;
 
