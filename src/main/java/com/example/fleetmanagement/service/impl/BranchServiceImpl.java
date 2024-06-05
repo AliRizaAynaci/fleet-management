@@ -22,7 +22,8 @@ public class BranchServiceImpl implements BranchService {
 
         if (packageItem.getDeliveryPoint() == DeliveryPoint.BRANCH) {
             if (packageItem.getSack() != null) {
-                throw new IllegalArgumentException("This package is in a sack. It must be unloaded at a branches.");
+                throw new IllegalArgumentException("This package is in a sack. " +
+                        "It must be unloaded at a Distribute Center or Transfer Center.");
             }
             packageItem.setState(ShipmentState.UNLOADED);
             packageItem.setSack(null);

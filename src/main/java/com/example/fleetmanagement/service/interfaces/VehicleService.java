@@ -6,6 +6,6 @@ import com.example.fleetmanagement.dto.VehicleDto;
 
 public interface VehicleService {
 
-    DistributionResponseDto distribute(DistributionRequestDTO request, VehicleDto vehicle);
+    DistributionResponseDto distribute(DistributionRequestDTO request, String vehicle);
 
 }

@@ -18,7 +18,7 @@ public class DistributeController {
     }
 
     @PostMapping("/{vehiclePlate}/distribute")
-    public ResponseEntity<DistributionResponseDto> distribute(@PathVariable VehicleDto vehiclePlate,
+    public ResponseEntity<DistributionResponseDto> distribute(@PathVariable String vehiclePlate,
                                                               @RequestBody DistributionRequestDTO request) {
         DistributionResponseDto response = vehicleService.distribute(request, vehiclePlate);
         return ResponseEntity.ok(response);
