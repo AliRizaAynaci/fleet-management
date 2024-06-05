@@ -13,10 +13,10 @@ public abstract class Shipment {
 
     private String barcode;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private DeliveryPoint deliveryPoint;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private ShipmentState state;
 
     public Shipment(Long id, String barcode, DeliveryPoint deliveryPoint, ShipmentState state) {
