@@ -55,12 +55,12 @@ public class VehicleServiceImpl implements VehicleService {
                             .orElseThrow(() -> new IllegalArgumentException("Package not found with barcode: " + barcode));
 
                     // if package is created, we need to process the package
-                    if (packageItem.getState() == ShipmentState.CREATED) {
+                    if (packageItem.getState() == ShipmentState.LOADED) {
                         newState = processPackage(packageItem, deliveryPoint);
                         packageRepository.save(packageItem);
                     }
                     // if package is loaded into sack, we need to process the sack
-                    else if (packageItem.getState() == ShipmentState.LOADED) {
+                    else if (packageItem.getState() == ShipmentState.LOADED_INTO_SACK) {
                         newState = processSack(packageItem.getSack(), deliveryPoint);
                         packageRepository.save(packageItem);
                     }
