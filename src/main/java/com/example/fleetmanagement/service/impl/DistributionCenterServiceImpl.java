@@ -50,7 +50,7 @@ public class DistributionCenterServiceImpl implements DistributionCenterService 
         sackRepository.save(sack);
         logger.info("Sack with barcode {} unloaded at distribution center.",
                 sack.getBarcode());
-        return ShipmentState.UNLOADED;
+        return sack.getState();
     }
 
     @Override
@@ -67,11 +67,10 @@ public class DistributionCenterServiceImpl implements DistributionCenterService 
             throw new IllegalArgumentException("This package is already unloaded.");
         }
 
-        packageItem.setSack(null);
         packageItem.setState(ShipmentState.UNLOADED);
         packageRepository.save(packageItem);
         logger.info("Package with barcode {} unloaded at distribution center.",
                 packageItem.getBarcode());
-        return ShipmentState.UNLOADED;
+        return packageItem.getState();
     }
 }

@@ -35,7 +35,7 @@ public class BranchServiceImpl implements BranchService {
             packageRepository.save(packageItem);
             logger.info("Package with barcode {} unloaded at branch.",
                     packageItem.getBarcode());
-            return ShipmentState.UNLOADED;
+            return packageItem.getState();
         } else {
             logger.warn("Package with barcode {} cannot be unloaded at this branch.",
                     packageItem.getBarcode());

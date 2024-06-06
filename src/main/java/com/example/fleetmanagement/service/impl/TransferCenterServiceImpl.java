@@ -60,6 +60,32 @@ public class TransferCenterServiceImpl implements TransferCenterService {
         sackRepository.save(sack);
         logger.info("Sack with barcode {} unloaded at transfer center.",
                 sack.getBarcode());
-        return ShipmentState.UNLOADED;
+        return sack.getState();
+    }
+
+    public ShipmentState unloadPackage(Package packageItem) {
+        if (packageItem.getDeliveryPoint() != DeliveryPoint.TRANSFER_CENTER) {
+            logger.warn("Package with barcode {} cannot be unloaded at this transfer center.",
+                    packageItem.getBarcode());
+            throw new IllegalArgumentException("This package cannot be unloaded at this transfer center.");
+        }
+
+        if (packageItem.getState() == ShipmentState.UNLOADED) {
+            logger.warn("Package with barcode {} is already unloaded.",
+                    packageItem.getBarcode());
+            throw new IllegalArgumentException("This package is already unloaded.");
+        }
+
+        if (packageItem.getSack() != null) {
+            packageItem.setState(ShipmentState.UNLOADED);
+            packageItem.setSack(null);
+            packageRepository.save(packageItem);
+            logger.info("Package with barcode {} unloaded at transfer center.",
+                    packageItem.getBarcode());
+            return packageItem.getState();
+        }
+        packageItem.setState(ShipmentState.LOADED);
+        packageRepository.save(packageItem);
+        return packageItem.getState();
     }
 }
