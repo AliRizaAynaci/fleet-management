@@ -16,8 +16,8 @@ public class Sack extends Shipment {
     @OneToMany(mappedBy = "sack", cascade = CascadeType.ALL)
     private List<Package> packages;
 
-    public Sack(String barcode, DeliveryPoint deliveryPoint, ShipmentState state) {
-        super(barcode, deliveryPoint, state);
+    public Sack(String barcode, DeliveryPoint deliveryPoint) {
+        super(barcode, deliveryPoint);
     }
 
     public Sack() {

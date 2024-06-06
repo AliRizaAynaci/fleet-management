@@ -26,10 +26,9 @@ public abstract class Shipment {
         this.state = state;
     }
 
-    protected Shipment(String barcode, DeliveryPoint deliveryPoint, ShipmentState state) {
+    protected Shipment(String barcode, DeliveryPoint deliveryPoint) {
         this.barcode = barcode;
         this.deliveryPoint = deliveryPoint;
-        this.state = state;
     }
 
     public Shipment() {

@@ -17,8 +17,8 @@ public class Package extends Shipment {
     private Sack sack;
 
     public Package(String barcode, DeliveryPoint deliveryPoint,
-                   ShipmentState state, Integer desi, Sack sack) {
-        super(barcode, deliveryPoint, state);
+                   Integer desi, Sack sack) {
+        super(barcode, deliveryPoint);
         this.desi = desi;
         this.sack = sack;
     }
