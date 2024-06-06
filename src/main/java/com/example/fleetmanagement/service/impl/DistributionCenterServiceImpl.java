@@ -7,12 +7,16 @@ import com.example.fleetmanagement.model.enums.ShipmentState;
 import com.example.fleetmanagement.repository.PackageRepository;
 import com.example.fleetmanagement.repository.SackRepository;
 import com.example.fleetmanagement.service.interfaces.DistributionCenterService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class DistributionCenterServiceImpl implements DistributionCenterService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DistributionCenterServiceImpl.class);
 
     private final PackageRepository packageRepository;
     private final SackRepository sackRepository;
@@ -25,9 +29,13 @@ public class DistributionCenterServiceImpl implements DistributionCenterService 
     @Override
     public ShipmentState unloadSack(Sack sack) {
         if (sack.getDeliveryPoint() != DeliveryPoint.DISTRIBUTION_CENTER) {
+            logger.warn("Sack with barcode {} cannot be unloaded at this distribution center.",
+                    sack.getBarcode());
             throw new IllegalArgumentException("This sack cannot be unloaded at this distribution center.");
         }
         if (sack.getState() == ShipmentState.UNLOADED) {
+            logger.warn("Sack with barcode {} is already unloaded.",
+                    sack.getBarcode());
             throw new IllegalArgumentException("This sack is already unloaded.");
         }
 
@@ -40,22 +48,30 @@ public class DistributionCenterServiceImpl implements DistributionCenterService 
 
         sack.setState(ShipmentState.UNLOADED);
         sackRepository.save(sack);
+        logger.info("Sack with barcode {} unloaded at distribution center.",
+                sack.getBarcode());
         return ShipmentState.UNLOADED;
     }
 
     @Override
     public ShipmentState unloadPackage(Package packageItem) {
         if (packageItem.getDeliveryPoint() != DeliveryPoint.DISTRIBUTION_CENTER) {
+            logger.warn("Package with barcode {} cannot be unloaded at this distribution center.",
+                    packageItem.getBarcode());
             throw new IllegalArgumentException("This package cannot be unloaded at this distribution center.");
         }
 
         if (packageItem.getState() == ShipmentState.UNLOADED) {
+            logger.warn("Package with barcode {} is already unloaded.",
+                    packageItem.getBarcode());
             throw new IllegalArgumentException("This package is already unloaded.");
         }
 
         packageItem.setSack(null);
         packageItem.setState(ShipmentState.UNLOADED);
         packageRepository.save(packageItem);
+        logger.info("Package with barcode {} unloaded at distribution center.",
+                packageItem.getBarcode());
         return ShipmentState.UNLOADED;
     }
 }
