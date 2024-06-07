@@ -3,6 +3,26 @@
 This project is a RESTful API that implements a basic fleet management system.
 This API enables fleet management of shipments according to their delivery points.
 
+## Project Overview
+
+This project is designed to manage shipments within a logistics system. It includes functionality to handle different types of shipments, such as packages and sacks, and provides features for unloading these shipments at various delivery points. Below are the key concepts used in the project:
+
+### Shipment Types:
+
+- **Package:** Refers to a single item or good that is being shipped.
+- **Sack:** Refers to a shipment type that consists of more than one item or good. A sack can contain multiple packages.
+
+### Delivery Points:
+
+There are three different delivery points in the system:
+
+1. **Branch:** At branches, only packages can be unloaded. Sacks and packages in sacks cannot be unloaded.
+2. **Distribution Center:** At distribution centers, sacks, packages in sacks, and packages that are not assigned to a sack can be unloaded.
+3. **Transfer Center:** At transfer centers, only sacks and packages in sacks can be unloaded.
+
+These concepts form the basis of the fleet management system implemented in this project.
+
+
 ## Technologies Used
 
 - Java 17 : Main programming language
@@ -45,6 +65,7 @@ This API enables fleet management of shipments according to their delivery point
 | deliveryPoint | Enum (String)   | Delivery Point    |
 | state         | Enum (String)   | Shipment State    |
 | packages      | List\<Package\> | Packages          |
+
 
 ## Usage
 
@@ -97,11 +118,11 @@ If you prefer to run the project without Docker, follow the steps below:
         {
           "deliveryPoint": "BRANCH",
           "deliveries": [
-            {"barcode": "barcode1"},
-            {"barcode": "barcode2"},
-            {"barcode": "barcode3"},
-            {"barcode": "barcode4"},
-            {"barcode": "barcode5"}
+            {"barcode": "P7988000121"},
+            {"barcode": "P7988000122"},
+            {"barcode": "P7988000123"},
+            {"barcode": "P8988000121"},
+            {"barcode": "C725799"}
           ]
         }
       ]
@@ -117,11 +138,11 @@ If you prefer to run the project without Docker, follow the steps below:
         {
           "deliveryPoint": "BRANCH",
           "deliveries": [
-            {"barcode": "barcode1", "state": "UNLOADED"},
-            {"barcode": "barcode2", "state": "UNLOADED"},
-            {"barcode": "barcode3", "state": "UNLOADED"},
-            {"barcode": "barcode4", "state": "LOADED"},
-            {"barcode": "barcode5", "state": "LOADED"}
+            {"barcode": "P7988000121", "state": "UNLOADED"},
+            {"barcode": "P7988000122", "state": "UNLOADED"},
+            {"barcode": "P7988000123", "state": "UNLOADED"},
+            {"barcode": "P8988000121", "state": "LOADED"},
+            {"barcode": "C725799", "state": "LOADED"}
           ]
         }
       ]
