@@ -36,15 +36,6 @@ These concepts form the basis of the fleet management system implemented in this
 
 ## Database Schema
 
-### Shipment Table
-
-| Field         | Type            | Description       |
-|---------------|-----------------|-------------------|
-| id            | Long            | Primary Key       |
-| barcode       | String          | Barcode           |
-| deliveryPoint | Enum (String)   | Delivery Point    |
-| state         | Enum (String)   | Shipment State    |
-
 ### Package Table
 
 | Field       | Type             | Description       |
