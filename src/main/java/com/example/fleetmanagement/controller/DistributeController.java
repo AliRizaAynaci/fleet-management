@@ -2,7 +2,6 @@ package com.example.fleetmanagement.controller;
 
 import com.example.fleetmanagement.dto.DistributionRequestDTO;
 import com.example.fleetmanagement.dto.DistributionResponseDto;
-import com.example.fleetmanagement.dto.VehicleDto;
 import com.example.fleetmanagement.service.interfaces.VehicleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

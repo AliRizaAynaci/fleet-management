@@ -1,15 +1,8 @@
 package com.example.fleetmanagement.service.impl;
 
 import com.example.fleetmanagement.dto.*;
-import com.example.fleetmanagement.model.entity.Package;
-import com.example.fleetmanagement.model.entity.Sack;
 import com.example.fleetmanagement.model.enums.DeliveryPoint;
 import com.example.fleetmanagement.model.enums.ShipmentState;
-import com.example.fleetmanagement.repository.PackageRepository;
-import com.example.fleetmanagement.repository.SackRepository;
-import com.example.fleetmanagement.service.interfaces.BranchService;
-import com.example.fleetmanagement.service.interfaces.DistributionCenterService;
-import com.example.fleetmanagement.service.interfaces.TransferCenterService;
 import com.example.fleetmanagement.service.interfaces.VehicleService;
 import com.example.fleetmanagement.service.strategy.impl.PackageProcessor;
 import com.example.fleetmanagement.service.strategy.impl.SackProcessor;

@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  app:
+    image: 'fleetmanagement'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fleetmanagement
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/fleetmanagement
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13-alpine
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=fleetmanagement
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

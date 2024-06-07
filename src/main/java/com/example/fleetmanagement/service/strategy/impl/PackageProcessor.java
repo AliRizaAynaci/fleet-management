@@ -36,16 +36,6 @@ public class PackageProcessor extends BaseProcessor implements DeliveryItemProce
             packageItem.setState(ShipmentState.CREATED);
         }
 
-//        if (packageItem.getSack() != null) {
-//            packageItem.setState(ShipmentState.LOADED_INTO_SACK);
-//            logger.info("Package with barcode: {} is loaded into sack.", packageItem.getBarcode());
-//            return processPackage(packageItem, deliveryPoint);
-//        } else {
-//            packageItem.setState(ShipmentState.LOADED);
-//            logger.info("Package with barcode: {} is loaded.", packageItem.getBarcode());
-//            return processPackage(packageItem, deliveryPoint);
-//        }
-
         return processPackage(packageItem, deliveryPoint);
     }
 }
