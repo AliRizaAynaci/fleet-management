@@ -33,6 +33,7 @@ These concepts form the basis of the fleet management system implemented in this
 - PostgreSQL : Database
 - Docker : Containerization
 - Swagger : API documentation
+- GitHub Actions : CI/CD
 
 ## Database Schema
 
@@ -57,6 +58,28 @@ These concepts form the basis of the fleet management system implemented in this
 | state         | Enum (String)   | Shipment State    |
 | packages      | List\<Package\> | Packages          |
 
+
+## CI/CD with GitHub Actions
+
+This project uses GitHub Actions for its continuous integration and continuous delivery (CI/CD) pipeline. The workflow is defined in the `.github/workflows/app.yml` file.
+
+### Pipeline Overview
+
+The pipeline includes two main jobs:
+
+#### **build:**
+
+- Triggered on pushes or pull requests to the main branch.
+- Sets up a PostgreSQL database for testing.
+- Builds the project using Maven and caches dependencies.
+- Archives the resulting JAR artifact if the build is successful.
+
+#### **test:**
+
+- Runs only after the build job completes successfully.
+- Also sets up a PostgreSQL database for integration testing.
+- Executes all tests using Maven.
+- Archives the test reports for review.
 
 ## Usage
 
