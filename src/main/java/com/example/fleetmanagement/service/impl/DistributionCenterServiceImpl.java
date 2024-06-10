@@ -10,6 +10,7 @@ import com.example.fleetmanagement.service.interfaces.DistributionCenterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class DistributionCenterServiceImpl implements DistributionCenterService 
     }
 
     @Override
+    @Transactional
     public ShipmentState unloadSack(Sack sack) {
         if (sack.getDeliveryPoint() != DeliveryPoint.DISTRIBUTION_CENTER) {
             logger.warn("Sack with barcode {} cannot be unloaded at this distribution center.",

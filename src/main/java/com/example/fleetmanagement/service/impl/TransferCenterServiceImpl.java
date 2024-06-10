@@ -29,13 +29,11 @@ public class TransferCenterServiceImpl implements TransferCenterService {
     @Override
     public ShipmentState unloadSack(Sack sack) {
         if (sack.getDeliveryPoint() != DeliveryPoint.TRANSFER_CENTER) {
-            logger.warn("Sack with barcode {} cannot be unloaded at this transfer center.",
-                    sack.getBarcode());
+            logger.warn("Sack with barcode {} cannot be unloaded at this transfer center.", sack.getBarcode());
             throw new IllegalArgumentException("This sack cannot be unloaded at this transfer center.");
         }
         if (sack.getState() == ShipmentState.UNLOADED) {
-            logger.warn("Sack with barcode {} is already unloaded.",
-                    sack.getBarcode());
+            logger.warn("Sack with barcode {} is already unloaded.", sack.getBarcode());
             throw new IllegalArgumentException("This sack is already unloaded.");
         }
 
@@ -52,8 +50,7 @@ public class TransferCenterServiceImpl implements TransferCenterService {
             packageItem.setState(ShipmentState.UNLOADED);
             packageItem.setSack(null);
             packageRepository.save(packageItem);
-            logger.info("Package with barcode {} unloaded at transfer center.",
-                    packageItem.getBarcode());
+            logger.info("Package with barcode {} unloaded at transfer center.", packageItem.getBarcode());
         }
 
         sack.setState(ShipmentState.UNLOADED);
@@ -71,8 +68,7 @@ public class TransferCenterServiceImpl implements TransferCenterService {
         }
 
         if (packageItem.getState() == ShipmentState.UNLOADED) {
-            logger.warn("Package with barcode {} is already unloaded.",
-                    packageItem.getBarcode());
+            logger.warn("Package with barcode {} is already unloaded.", packageItem.getBarcode());
             throw new IllegalArgumentException("This package is already unloaded.");
         }
 
@@ -80,8 +76,7 @@ public class TransferCenterServiceImpl implements TransferCenterService {
             packageItem.setState(ShipmentState.UNLOADED);
             packageItem.setSack(null);
             packageRepository.save(packageItem);
-            logger.info("Package with barcode {} unloaded at transfer center.",
-                    packageItem.getBarcode());
+            logger.info("Package with barcode {} unloaded at transfer center.", packageItem.getBarcode());
             return packageItem.getState();
         }
         packageItem.setState(ShipmentState.LOADED);

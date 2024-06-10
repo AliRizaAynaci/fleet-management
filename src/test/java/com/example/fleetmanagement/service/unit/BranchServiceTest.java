@@ -1,4 +1,4 @@
-package com.example.fleetmanagement.service;
+package com.example.fleetmanagement.service.unit;
 
 import com.example.fleetmanagement.model.entity.Package;
 import com.example.fleetmanagement.model.entity.Sack;
@@ -6,7 +6,6 @@ import com.example.fleetmanagement.model.enums.DeliveryPoint;
 import com.example.fleetmanagement.model.enums.ShipmentState;
 import com.example.fleetmanagement.repository.PackageRepository;
 import com.example.fleetmanagement.service.impl.BranchServiceImpl;
-import com.example.fleetmanagement.service.interfaces.BranchService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -60,7 +59,7 @@ public class BranchServiceTest {
         Package packageItem = new Package("P8988000122", DeliveryPoint.BRANCH, 26, new Sack());
         when(packageRepository.findByBarcode(packageItem.getBarcode())).thenReturn(Optional.of(packageItem));
 
-        assertThrows(IllegalArgumentException.class, () -> branchService.unloadPackage(packageItem), // BranchServiceImpl'i kullan
+        assertThrows(IllegalArgumentException.class, () -> branchService.unloadPackage(packageItem),
                 "This package is in a sack. It must be unloaded at a Distribute Center or Transfer Center.");
         verify(packageRepository, never()).save(packageItem);
     }
