@@ -24,16 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class VehicleServiceIntegrationTest {
 
     @Autowired
-    private PackageProcessor packageProcessor;
-    @Autowired
-    private SackProcessor sackProcessor;
-    @Autowired
     private VehicleServiceImpl vehicleService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     @Transactional
@@ -67,7 +58,6 @@ public class VehicleServiceIntegrationTest {
         request.setRoute(List.of(branchRoute, distributionCenterRoute, transferCenterRoute));
 
         DistributionResponseDto response = vehicleService.distribute(request, "34TL34");
-
 
         // expected response
         DistributionResponseDto expectedResponse = new DistributionResponseDto();
